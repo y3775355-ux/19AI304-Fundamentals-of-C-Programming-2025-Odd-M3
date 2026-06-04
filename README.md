@@ -4,7 +4,7 @@
 ## 6. Implementation of string manipulation.
 # Ex.No:11
   Formulate a C program to convert a given decimal number into its binary equivalent and display it.
-# Date : 
+# Date :  
 # Aim:
 To formulate a C program to convert a decimal number into its binary equivalent and display it.
 # Algorithm:
@@ -28,7 +28,34 @@ To formulate a C program to convert a decimal number into its binary equivalent 
 ### Step 8: 
    Stop
 # Program:
+#include <stdio.h>
+
+int main() {
+```
+    int n, binary[32], i = 0;
+
+    scanf("%d", &n);
+
+    if (n == 0) {
+        printf("Binary: 0");
+        return 0;
+    }
+
+    while (n > 0) {
+        binary[i++] = n % 2;
+        n = n / 2;
+    }
+
+    printf("Binary: ");
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%d", binary[j]);
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="1214" height="682" alt="image" src="https://github.com/user-attachments/assets/9e6df6c7-94b3-45f1-b77f-ac1b0d6adf90" />  
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -37,7 +64,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-3- Module 3 - FoC
 # Ex.No:12
   Develop a C program to read a matrix and find its saddle point. A saddle point is an element that is the minimum in its row and also the maximum in its column. If such an element exists, display its position and value.
-# Date : 
+# Date :  
 # Aim:
   To develop a C program that inputs a matrix, checks each row for its minimum element, verifies whether that element is also the maximum in its corresponding column, and displays the saddle point and its position if it exists.
 # Algorithm:
@@ -67,7 +94,54 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    int a[10][10], r, c, i, j;
+
+    scanf("%d %d", &r, &c);
+
+    for (i = 0; i < r; i++)
+        for (j = 0; j < c; j++)
+            scanf("%d", &a[i][j]);
+
+    int found = 0;
+
+    for (i = 0; i < r; i++) {
+        int min = a[i][0], col = 0;
+
+        for (j = 1; j < c; j++) {
+            if (a[i][j] < min) {
+                min = a[i][j];
+                col = j;
+            }
+        }
+
+        int isSaddle = 1;
+        for (int k = 0; k < r; k++) {
+            if (a[k][col] > min) {
+                isSaddle = 0;
+                break;
+            }
+        }
+
+        if (isSaddle) {
+            printf("Saddle Point: %d\n", min);
+            printf("Position: (%d, %d)\n", i, col);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No Saddle Point");
+
+    return 0;
+}
+```
 # Output:
+<img width="1197" height="611" alt="image" src="https://github.com/user-attachments/assets/ddc7d985-2f19-4f47-95e5-705e4c1340e5" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -76,7 +150,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-3- Module 3 - FoC
 # Ex.No:13
   Formulate a C program to reverse a string entered by the user and display the reversed string.
-# Date : 
+# Date : 12.05.2026
 # Aim:
   To formulate a C program that reads a string from the user, reverses it, and prints the reversed string.
 # Algorithm:
@@ -101,7 +175,27 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10: 
   Stop
 # Program:
+```
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    int i, len;
+
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    for (i = len - 1; i >= 0; i--) {
+        printf("%c", str[i]);
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="1188" height="474" alt="image" src="https://github.com/user-attachments/assets/ef733004-1aa3-49d9-ba42-2096c148f96c" />
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -135,10 +229,34 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8:
   Stop
 # Program:
+```
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    int freq[256] = {0};
+
+    scanf("%s", str);
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        freq[(int)str[i]]++;
+    }
+
+    for (int i = 0; i < 256; i++) {
+        if (freq[i] != 0) {
+            printf("%c : %d\n", i, freq[i]);
+        }
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="1426" height="657" alt="image" src="https://github.com/user-attachments/assets/6a1a5b4a-8c5c-4f37-8c37-5fb866d6efac" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
-
 
 # 19AI304-Fundamentals-of-C-Programming-2025-Odd-M3
 # IAPR-3- Module 3 - FoC
@@ -169,7 +287,37 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8: 
   Stop
 # Program:
+```
+#include <stdio.h>
+#include <string.h>
+int main() {
+    char str[200], words[50][50];
+    int count = 0;
+    fgets(str, sizeof(str), stdin);
+    char *token = strtok(str, " \n");
+    while (token != NULL) {
+        int found = 0;
+        for (int i = 0; i < count; i++) {
+            if (strcmp(words[i], token) == 0) {
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            strcpy(words[count], token);
+            count++;
+        }
+        token = strtok(NULL, " \n");
+    }
+    for (int i = 0; i < count; i++) {
+        printf("%s ", words[i]);
+    }
+    return 0;
+}
+```
 # Output:
+<img width="1551" height="766" alt="image" src="https://github.com/user-attachments/assets/fb2af900-3205-434b-b147-e5b15ff8b6d2" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
